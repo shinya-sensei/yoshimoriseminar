@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年9月28日 オンサロ吉森先生特別セミナー 懇親会参加確認</title>
+  <style>
+    :root {
+      --primary: #1e3c72;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #2d3748;
+      --success: #27ae60;
+      --danger: #c0392b;
+      --warning: #d68910;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px 12px;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+
+    header {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      padding: 24px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    header h1 { font-size: 1.35rem; font-weight: 700; margin-bottom: 6px; }
+    header p { font-size: 0.9rem; opacity: 0.9; }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .card .label { font-size: 0.8rem; color: #718096; margin-bottom: 4px; }
+    .card .val { font-size: 1.15rem; font-weight: bold; color: var(--primary); }
+
+    .status-summary {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .status-summary h2 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      color: var(--primary);
+      border-bottom: 2px solid #edf2f7;
+      padding-bottom: 6px;
+    }
+
+    .summary-grid { display: flex; justify-content: space-around; text-align: center; }
+    .summary-item .num { font-size: 1.4rem; font-weight: bold; }
+    .summary-item.yes .num { color: var(--success); }
+    .summary-item.no .num { color: var(--danger); }
+    .summary-item.pending .num { color: var(--warning); }
+
+    .search-box { margin-bottom: 16px; }
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .table-container {
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      min-height: 200px;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    th { background-color: #f7fafc; color: var(--primary); font-weight: 600; white-space: nowrap; text-align: left; }
+    tr:last-child td { border-bottom: none; }
+
+    select.status-select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      font-weight: bold;
+      cursor: pointer;
+      outline: none;
+    }
+
+    select.status-select[data-val="はい"] { background-color: #e8f5e9; color: var(--success); border-color: #a5d6a7; }
+    select.status-select[data-val="いいえ"] { background-color: #ffebee; color: var(--danger); border-color: #ef9a9a; }
+    select.status-select[data-val="未"] { background-color: #fff8e1; color: var(--warning); border-color: #ffe082; }
+
+    .message-box {
+      text-align: center;
+      padding: 40px 20px;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: var(--primary);
+      z-index: 1000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>2026年9月28日 オンサロ吉森先生特別セミナー</h1>
+      <p>懇親会 参加・不参加アンケート確認ページ</p>
+    </header>
+
+    <div class="info-cards">
+      <div class="card">
+        <div class="label">開催日</div>
+        <div class="val">2026年9月28日（月）</div>
+      </div>
+      <div class="card">
+        <div class="label">懇親会費（お一人様）</div>
+        <div class="val">3,000円</div>
+      </div>
+    </div>
+
+    <div class="status-summary">
+      <h2>現在の集計状況</h2>
+      <div class="summary-grid">
+        <div class="summary-item yes">
+          <div class="label">参加（○）</div>
+          <div class="num" id="count-yes">- 名</div>
+        </div>
+        <div class="summary-item no">
+          <div class="label">不参加（×）</div>
+          <div class="num" id="count-no">- 名</div>
+        </div>
+        <div class="summary-item pending">
+          <div class="label">未定</div>
+          <div class="num" id="count-pending">- 名</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="お名前やサロン名で検索..." oninput="filterTable()">
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>お名前</th>
+            <th>サロン名</th>
+            <th>懇親会参加</th>
+          </tr>
+        </thead>
+        <tbody id="memberTable">
+          <tr>
+            <td colspan="3" class="message-box">スプレッドシートから読み込み中...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading-overlay" id="loading">スプレッドシート更新中...</div>
+
+  <script>
+    // 組み込み済みGAS API URL
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx3sIqFbZzxAM_6VzS68GF9I8wV0FJmVm7-J-eh-mGlwHaOjwl4DF93ps_Ae6P-5ejTDg/exec";
+
+    let members = [];
+
+    // スプレッドシートから最新データを取得
+    async function loadData() {
+      const tbody = document.getElementById("memberTable");
+
+      try {
+        const res = await fetch(GAS_API_URL);
+        members = await res.json();
+        
+        if (!members || members.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="3" class="message-box">データが見つかりませんでした。</td></tr>`;
+          return;
+        }
+
+        renderTable();
+      } catch (err) {
+        console.error("データ取得エラー:", err);
+        tbody.innerHTML = `<tr><td colspan="3" class="message-box" style="color:red;">データの読み込みに失敗しました。<br>通信環境またはアクセス権限をご確認ください。</td></tr>`;
+      }
+    }
+
+    // テーブル描画
+    function renderTable() {
+      const tbody = document.getElementById("memberTable");
+      tbody.innerHTML = "";
+
+      members.forEach((m, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${m.name}</strong></td>
+          <td>${m.salon}</td>
+          <td>
+            <select class="status-select" data-val="${m.status}" onchange="updateStatus(${index}, this.value, this)">
+              <option value="はい" ${m.status === 'はい' ? 'selected' : ''}>はい（参加）</option>
+              <option value="いいえ" ${m.status === 'いいえ' ? 'selected' : ''}>いいえ（不参加）</option>
+              <option value="未" ${m.status === '未' || !m.status ? 'selected' : ''}>未定</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      renderSummaryOnly();
+    }
+
+    // プルダウン変更時にスプレッドシートを更新
+    async function updateStatus(index, newStatus, selectElem) {
+      members[index].status = newStatus;
+      selectElem.setAttribute("data-val", newStatus);
+      renderSummaryOnly();
+
+      document.getElementById("loading").style.display = "flex";
+      try {
+        await fetch(GAS_API_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            row: members[index].id,
+            status: newStatus
+          })
+        });
+      } catch (err) {
+        alert("スプレッドシートへの更新に失敗しました。");
+      } finally {
+        document.getElementById("loading").style.display = "none";
+      }
+    }
+
+    // 集計更新
+    function renderSummaryOnly() {
+      let yesCount = 0, noCount = 0, pendingCount = 0;
+      members.forEach(m => {
+        if (m.status === "はい") yesCount++;
+        else if (m.status === "いいえ") noCount++;
+        else pendingCount++;
+      });
+      document.getElementById("count-yes").textContent = yesCount + "名";
+      document.getElementById("count-no").textContent = noCount + "名";
+      document.getElementById("count-pending").textContent = pendingCount + "名";
+    }
+
+    // 検索フィルター
+    function filterTable() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#memberTable tr");
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? "" : "none";
+      });
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
