@@ -12,18 +12,18 @@
       --border: #cbd5e1;
       --text: #1e293b;
       
-      /* ステータスカラー（視認性を向上） */
-      --color-yes-bg: #dcfce7;
-      --color-yes-text: #15803d;
-      --color-yes-border: #86efac;
+      /* 強調メリハリ配色 */
+      --color-yes-bg: #ffffff;
+      --color-yes-text: #1e3c72;
+      --color-yes-border: #1e3c72;
 
-      --color-no-bg: #ffe4e6;
-      --color-no-text: #be123c;
-      --color-no-border: #fca5a5;
+      --color-no-bg: #d90429;
+      --color-no-text: #ffffff;
+      --color-no-border: #d90429;
 
-      --color-pending-bg: #fef3c7;
-      --color-pending-text: #b45309;
-      --color-pending-border: #fde047;
+      --color-pending-bg: #e2e8f0;
+      --color-pending-text: #475569;
+      --color-pending-border: #cbd5e1;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -90,7 +90,7 @@
     .summary-grid { display: flex; justify-content: space-around; text-align: center; }
     .summary-item .num { font-size: 1.5rem; font-weight: bold; }
     .summary-item.yes .num { color: var(--color-yes-text); }
-    .summary-item.no .num { color: var(--color-no-text); }
+    .summary-item.no .num { color: var(--color-no-bg); }
     .summary-item.pending .num { color: var(--color-pending-text); }
 
     .search-box { margin-bottom: 16px; }
@@ -118,13 +118,12 @@
     th { background-color: #f8fafc; color: var(--primary); font-weight: 600; white-space: nowrap; text-align: left; }
     tr:last-child td { border-bottom: none; }
 
-    /* ステータスドロップダウン（はっきりした配色） */
+    /* メリハリ重視のドロップダウン設定 */
     select.status-select {
       padding: 8px 14px;
       border-radius: 8px;
-      border: 2px solid var(--border);
       font-size: 0.9rem;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
       outline: none;
       transition: all 0.2s ease;
@@ -134,21 +133,27 @@
     select.status-select[data-val="はい"] {
       background-color: var(--color-yes-bg);
       color: var(--color-yes-text);
-      border-color: var(--color-yes-border);
+      border: 2px solid var(--color-yes-border);
     }
 
     select.status-select[data-val="不参加"],
     select.status-select[data-val="いいえ"] {
       background-color: var(--color-no-bg);
       color: var(--color-no-text);
-      border-color: var(--color-no-border);
+      border: 2px solid var(--color-no-border);
     }
 
     select.status-select[data-val="未定"],
     select.status-select[data-val="未"] {
       background-color: var(--color-pending-bg);
       color: var(--color-pending-text);
-      border-color: var(--color-pending-border);
+      border: 2px solid var(--color-pending-border);
+    }
+
+    /* ドロップダウンを展開した際の選択肢内テキスト（OS視認性確保） */
+    select.status-select option {
+      background-color: #ffffff;
+      color: #1e293b;
     }
 
     .message-box {
@@ -224,21 +229,20 @@
         </thead>
         <tbody id="memberTable">
           <tr>
-            <td colspan="3" class="message-box">リストから読み込み中...</td>
+            <td colspan="3" class="message-box">スプレッドシートから読み込み中...</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <div class="loading-overlay" id="loading">リスト更新中...</div>
+  <div class="loading-overlay" id="loading">スプレッドシート更新中...</div>
 
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbx3sIqFbZzxAM_6VzS68GF9I8wV0FJmVm7-J-eh-mGlwHaOjwl4DF93ps_Ae6P-5ejTDg/exec";
 
     let members = [];
 
-    // スプレッドシートの値と画面表示の相互変換マッピング
     function normalizeStatus(val) {
       if (val === "はい" || val === "参加") return "参加";
       if (val === "いいえ" || val === "不参加") return "不参加";
