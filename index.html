@@ -122,9 +122,10 @@
       border-radius: 8px;
       font-size: 0.9rem;
       font-weight: 800;
-      cursor: pointer;
+      cursor: not-allowed; /* 非活性であることがわかりやすいカーソル */
       outline: none;
       transition: all 0.2s ease;
+      opacity: 0.9; /* disabled時の極端な薄さを防止 */
     }
 
     select.status-select[data-val="参加"],
@@ -254,22 +255,6 @@
       return "未定";
     }
 
-    function toSheetStatus(val) {
-      if (val === "参加") return "はい";
-      if (val === "不参加") return "いいえ";
-      return "未定";
-    }
-
-    function getNowFormatted() {
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = String(now.getMonth() + 1).padStart(2, '0');
-      const d = String(now.getDate()).padStart(2, '0');
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      return `${y}/${m}/${d} ${hh}:${mm}`;
-    }
-
     async function loadData() {
       const tbody = document.getElementById("memberTable");
 
@@ -304,7 +289,7 @@
           <td><strong>${m.name}</strong></td>
           <td>${m.salon}</td>
           <td>
-            <select class="status-select" data-val="${m.statusDisplay}" onchange="updateStatus(${index}, this.value, this)">
+            <select class="status-select" data-val="${m.statusDisplay}" disabled>
               <option value="参加" ${m.statusDisplay === '参加' ? 'selected' : ''}>参加</option>
               <option value="不参加" ${m.statusDisplay === '不参加' ? 'selected' : ''}>不参加</option>
               <option value="未定" ${m.statusDisplay === '未定' ? 'selected' : ''}>未定</option>
@@ -316,37 +301,6 @@
       });
 
       renderSummaryOnly();
-    }
-
-    async function updateStatus(index, newDisplayStatus, selectElem) {
-      const nowStr = getNowFormatted();
-      members[index].statusDisplay = newDisplayStatus;
-      members[index].updatedAt = nowStr;
-      
-      selectElem.setAttribute("data-val", newDisplayStatus);
-      const dateTd = document.getElementById(`date-${index}`);
-      if (dateTd) dateTd.textContent = nowStr;
-
-      renderSummaryOnly();
-
-      const sheetValue = toSheetStatus(newDisplayStatus);
-
-      document.getElementById("loading").style.display = "flex";
-      try {
-        await fetch(GAS_API_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            row: members[index].id,
-            status: sheetValue
-          })
-        });
-      } catch (err) {
-        alert("スプレッドシートへの更新に失敗しました。");
-      } finally {
-        document.getElementById("loading").style.display = "none";
-      }
     }
 
     function renderSummaryOnly() {
